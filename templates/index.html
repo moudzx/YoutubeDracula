@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YouTube Dracula</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="web web-tl" aria-hidden="true">
+  <svg viewBox="0 0 120 120" width="120" height="120">
+    <g fill="none" stroke="#8a8a8a" stroke-width="0.7" opacity="0.55">
+      <path d="M0 0 L120 0"/>
+      <path d="M0 0 L0 120"/>
+      <path d="M0 0 L40 8"/>
+      <path d="M0 0 L70 22"/>
+      <path d="M0 0 L95 45"/>
+      <path d="M0 0 L112 75"/>
+      <path d="M0 0 L8 40"/>
+      <path d="M0 0 L22 70"/>
+      <path d="M0 0 L45 95"/>
+      <path d="M0 0 L75 112"/>
+      <path d="M14 3 Q22 14 8 22"/>
+      <path d="M28 8 Q42 26 16 40"/>
+      <path d="M45 15 Q65 42 25 62"/>
+      <path d="M65 25 Q92 60 38 88"/>
+    </g>
+  </svg>
+</div>
+<div class="web web-tr" aria-hidden="true">
+  <svg viewBox="0 0 120 120" width="120" height="120">
+    <g fill="none" stroke="#8a8a8a" stroke-width="0.7" opacity="0.55">
+      <path d="M120 0 L0 0"/>
+      <path d="M120 0 L120 120"/>
+      <path d="M120 0 L80 8"/>
+      <path d="M120 0 L50 22"/>
+      <path d="M120 0 L25 45"/>
+      <path d="M120 0 L8 75"/>
+      <path d="M120 0 L112 40"/>
+      <path d="M120 0 L98 70"/>
+      <path d="M120 0 L75 95"/>
+      <path d="M120 0 L45 112"/>
+      <path d="M106 3 Q98 14 112 22"/>
+      <path d="M92 8 Q78 26 104 40"/>
+      <path d="M75 15 Q55 42 95 62"/>
+      <path d="M55 25 Q28 60 82 88"/>
+    </g>
+  </svg>
+</div>
+
+<div class="deck">
+  <header class="deck-head">
+    <div class="deck-crest" aria-hidden="true">
+      <svg viewBox="0 0 40 30" width="40" height="30">
+        <path d="M6 2 L34 2 L30 22 L20 14 L10 22 Z" fill="none" stroke="currentColor" stroke-width="1"/>
+        <path d="M15 15 L19 28 L21.5 19 Z" fill="currentColor"/>
+        <path d="M25 15 L21 28 L18.5 19 Z" fill="currentColor"/>
+      </svg>
+    </div>
+    <div class="deck-brand">
+      <span class="deck-name">YouTube Dracula</span>
+    </div>
+    <div class="blood-drip" aria-hidden="true">
+      <svg viewBox="0 0 300 26" width="220" height="26" preserveAspectRatio="none">
+        <path d="M0,0 L300,0 L300,4 Q285,4 282,14 Q279,22 275,22 Q271,22 270,12 Q269,4 260,4 L230,4 Q226,4 224,16 Q222,26 218,26 Q214,26 213,17 Q212,4 200,4 L150,4 Q147,4 146,10 Q145,15 142,15 Q139,15 138,10 Q137,4 134,4 L90,4 Q86,4 84,19 Q82,25 79,25 Q76,25 75,18 Q74,4 65,4 L20,4 Q17,4 16,11 Q15,17 12,17 Q9,17 8,11 Q7,4 0,4 Z" fill="#5c0a12"/>
+      </svg>
+    </div>
+    <p class="deck-tag">Sunk in fangs, drained the audio. Paste a link, take the whole victim, just the blood, or one bitten slice.</p>
+  </header>
+
+  <section class="panel input-panel">
+    <label class="field-label" for="url">Offer up a video or playlist URL</label>
+    <div class="url-row">
+      <input type="text" id="url" placeholder="https://www.youtube.com/watch?v=... or /playlist?list=..." autocomplete="off">
+      <button id="fetchBtn" class="btn btn-primary">Sink Fangs</button>
+    </div>
+    <p class="hint" id="fetchHint">Only use this on videos you have the rights to download.</p>
+  </section>
+
+  <section class="panel features-note" id="featuresNote">
+    <p class="features-note-label">What the count can do</p>
+    <ul class="features-list">
+      <li><strong>Single video downloads</strong> — paste any video URL and grab it as a video or as audio-only, at whatever quality the source offers.</li>
+      <li><strong>Section trimming</strong> — drag the range sliders or type exact start/end times to drain out just that section instead of the whole body.</li>
+      <li><strong>MP3 conversion</strong> — convert audio-only downloads straight to MP3 (192kbps) with one checkbox.</li>
+      <li><strong>Playlist support</strong> — paste a playlist URL to see every track listed with its duration before you download anything.</li>
+      <li><strong>Playlist — one combined file</strong> — drain an entire playlist into a single audio file (MP3, M4A, Opus, or WAV) or a single bled-together video (MP4), in track order.</li>
+      <li><strong>Playlist — separate files</strong> — or keep every track as its own victim — audio or video — delivered together in one .zip.</li>
+      <li><strong>Quality control</strong> — choose exact video resolutions (up to 1080p and beyond) and audio bitrates/formats before downloading.</li>
+    </ul>
+  </section>
+
+  <!-- ==================== SINGLE VIDEO ==================== -->
+  <section class="panel video-panel hidden" id="videoPanel">
+    <div class="video-meta">
+      <img id="thumb" class="thumb" src="" alt="">
+      <div class="video-meta-text">
+        <h2 id="videoTitle">—</h2>
+        <p id="videoUploader" class="muted"></p>
+        <p id="videoDuration" class="muted"></p>
+      </div>
+    </div>
+
+    <div class="mode-tabs" id="videoModeTabs">
+      <button class="mode-tab active" data-mode="video">Video</button>
+      <button class="mode-tab" data-mode="audio">Audio only</button>
+    </div>
+
+    <div class="field-block">
+      <label class="field-label" for="formatSelect">Quality</label>
+      <select id="formatSelect"></select>
+    </div>
+
+    <div class="mp3-row hidden" id="mp3Row">
+      <label class="checkbox-row">
+        <input type="checkbox" id="convertMp3" checked>
+        <span>Convert to MP3 (192kbps)</span>
+      </label>
+    </div>
+
+    <div class="section-toggle-row">
+      <label class="checkbox-row">
+        <input type="checkbox" id="sectionToggle">
+        <span>Only download a section</span>
+      </label>
+    </div>
+
+    <div class="section-block hidden" id="sectionBlock">
+      <div class="track-row">
+        <div class="track-scale" id="trackScale"></div>
+        <input type="range" id="rangeStart" class="range-input range-start" min="0" max="100" value="0">
+        <input type="range" id="rangeEnd" class="range-input range-end" min="0" max="100" value="100">
+      </div>
+      <div class="time-row">
+        <label>
+          <span>Start</span>
+          <input type="text" id="startTime" placeholder="00:00:00" value="00:00:00">
+        </label>
+        <label>
+          <span>End</span>
+          <input type="text" id="endTime" placeholder="full length">
+        </label>
+      </div>
+    </div>
+
+    <button id="downloadBtn" class="btn btn-primary btn-wide">Sink Fangs In</button>
+
+    <div class="progress-wrap hidden" id="progressWrap">
+      <div class="progress-label" id="progressLabel">Starting…</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+  </section>
+
+  <!-- ==================== PLAYLIST ==================== -->
+  <section class="panel playlist-panel hidden" id="playlistPanel">
+    <div class="playlist-head">
+      <h2 id="playlistTitle">—</h2>
+      <p class="muted" id="playlistCount"></p>
+    </div>
+
+    <div class="track-list" id="trackList"></div>
+
+    <div class="mode-tabs mode-tabs-3" id="playlistModeTabs">
+      <button class="mode-tab active" data-mode="stitch">One combined file — audio</button>
+      <button class="mode-tab" data-mode="stitch_video">One combined file — video</button>
+      <button class="mode-tab" data-mode="separate_audio">Separate files — audio</button>
+      <button class="mode-tab" data-mode="separate_video">Separate files — video</button>
+    </div>
+
+    <div class="field-block" id="playlistAudioFormatBlock">
+      <label class="field-label" for="playlistAudioFormat">Audio format</label>
+      <select id="playlistAudioFormat">
+        <option value="mp3">MP3 (192kbps)</option>
+        <option value="m4a">M4A / AAC</option>
+        <option value="opus">Opus</option>
+        <option value="wav">WAV (uncompressed)</option>
+      </select>
+    </div>
+
+    <div class="field-block hidden" id="playlistVideoQualityBlock">
+      <label class="field-label" for="playlistVideoQuality">Video quality</label>
+      <select id="playlistVideoQuality">
+        <option value="best">Best available</option>
+        <option value="1080">Up to 1080p</option>
+        <option value="720">Up to 720p</option>
+        <option value="480">Up to 480p</option>
+      </select>
+    </div>
+
+    <p class="hint" id="playlistModeHint">All tracks download and merge into a single file, in order.</p>
+
+    <button id="playlistDownloadBtn" class="btn btn-primary btn-wide">Drain The Playlist</button>
+
+    <div class="progress-wrap hidden" id="playlistProgressWrap">
+      <div class="progress-label" id="playlistProgressLabel">Starting…</div>
+      <div class="progress-track"><div class="progress-fill" id="playlistProgressFill"></div></div>
+    </div>
+  </section>
+
+  <p class="disclaimer">
+    Only download videos you own, have permission to use, or that are licensed for reuse
+    (Creative Commons, public domain, your own uploads). This tool doesn't check licensing for you —
+    that responsibility is yours.
+  </p>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
