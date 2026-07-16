@@ -135,9 +135,9 @@ AUDIO_FORMAT_CODECS = {
 # Video quality presets offered for playlist "separate video files" mode
 VIDEO_QUALITY_FORMATS = {
     "best": "bestvideo+bestaudio/best",
-    "1080": "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
-    "720": "bestvideo[height<=720]+bestaudio/best[height<=720]",
-    "480": "bestvideo[height<=480]+bestaudio/best[height<=480]",
+    "1080": "bestvideo[height<=1080]+bestaudio/best[height<=1080]/best[height<=1080]/best",
+    "720": "bestvideo[height<=720]+bestaudio/best[height<=720]/best[height<=720]/best",
+    "480": "bestvideo[height<=480]+bestaudio/best[height<=480]/best[height<=480]/best",
 }
 
 
@@ -321,7 +321,7 @@ def _run_download(job_id, url, format_id, is_audio_only, start, end, want_mp3):
         ydl_opts["force_keyframes_at_cuts"] = True
 
     if is_audio_only:
-        ydl_opts["format"] = format_id if format_id else "bestaudio/best"
+        ydl_opts["format"] = f"{format_id}/bestaudio/best" if format_id else "bestaudio/best"
         if want_mp3:
             ydl_opts["postprocessors"] = [{
                 "key": "FFmpegExtractAudio",
@@ -329,8 +329,11 @@ def _run_download(job_id, url, format_id, is_audio_only, start, end, want_mp3):
                 "preferredquality": "192",
             }]
     else:
-        # Combine chosen video format with best audio if the chosen format has no audio
-        ydl_opts["format"] = f"{format_id}+bestaudio/best" if format_id else "best"
+        # Combine chosen video format with best audio if the chosen format has no audio.
+        # Falls back to a combined 'best' stream if the specific format_id isn't
+        # available under the active YouTube client (e.g. android/ios clients
+        # expose fewer separate video-only formats than the web client).
+        ydl_opts["format"] = f"{format_id}+bestaudio/best/best" if format_id else "best"
         ydl_opts["merge_output_format"] = "mp4"
 
     try:
