@@ -21,6 +21,11 @@ os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 COOKIES_FROM_BROWSER = os.environ.get("YTDLP_COOKIES_FROM_BROWSER", "").strip()
 COOKIES_FILE = os.environ.get("YTDLP_COOKIES_FILE", "").strip()
 
+# --- Optional proxy (needed if YouTube blocks the server's own IP, common on
+# cloud/datacenter hosts like Render regardless of cookie validity) ---
+#   YTDLP_PROXY=http://user:pass@proxy-host:port
+PROXY_URL = os.environ.get("YTDLP_PROXY", "").strip()
+
 # Render (and similar platforms) mount "Secret Files" as read-only at /etc/secrets/...
 # yt-dlp needs to be able to WRITE to the cookie jar (it refreshes cookies as it
 # runs), so if our configured cookies file lives on a read-only mount, copy it to
@@ -47,6 +52,12 @@ elif COOKIES_FILE:
 else:
     print("[cookies] WARNING: No YTDLP_COOKIES_FROM_BROWSER or YTDLP_COOKIES_FILE configured. "
           "YouTube requests may be blocked with 'Sign in to confirm you're not a bot'.")
+
+if PROXY_URL:
+    print(f"[proxy] Using proxy: {PROXY_URL.split('@')[-1] if '@' in PROXY_URL else PROXY_URL}")
+else:
+    print("[proxy] No YTDLP_PROXY configured. If YouTube blocks this server's IP "
+          "even with valid cookies, set YTDLP_PROXY to a residential/mobile proxy URL.")
 
 # --- ffmpeg location (needed if ffmpeg/ffprobe aren't on your system PATH) ---
 # Set this to the FOLDER containing ffmpeg.exe / ffprobe.exe, e.g. on Windows:
@@ -81,6 +92,11 @@ def build_base_opts():
         opts["cookiefile"] = COOKIES_FILE
     if FFMPEG_LOCATION:
         opts["ffmpeg_location"] = FFMPEG_LOCATION
+    # Prefer YouTube's mobile clients, which are less aggressively bot-checked
+    # than the web client. Helps even when cookies are missing/expired.
+    opts["extractor_args"] = {"youtube": {"player_client": ["android", "ios", "web"]}}
+    if PROXY_URL:
+        opts["proxy"] = PROXY_URL
     return opts
 
 
