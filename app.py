@@ -33,6 +33,21 @@ if COOKIES_FILE and not os.access(os.path.dirname(COOKIES_FILE) or ".", os.W_OK)
     except OSError:
         pass  # fall back to original path; will error clearly later if truly unreadable
 
+# --- Startup diagnostics: makes cookie problems visible in Render logs ---
+if COOKIES_FROM_BROWSER:
+    print(f"[cookies] Using cookies-from-browser: {COOKIES_FROM_BROWSER}")
+elif COOKIES_FILE:
+    if os.path.exists(COOKIES_FILE):
+        _size = os.path.getsize(COOKIES_FILE)
+        print(f"[cookies] Using cookie file: {COOKIES_FILE} ({_size} bytes)")
+        if _size == 0:
+            print("[cookies] WARNING: cookie file is EMPTY.")
+    else:
+        print(f"[cookies] WARNING: YTDLP_COOKIES_FILE is set to '{COOKIES_FILE}' but that file does not exist.")
+else:
+    print("[cookies] WARNING: No YTDLP_COOKIES_FROM_BROWSER or YTDLP_COOKIES_FILE configured. "
+          "YouTube requests may be blocked with 'Sign in to confirm you're not a bot'.")
+
 # --- ffmpeg location (needed if ffmpeg/ffprobe aren't on your system PATH) ---
 # Set this to the FOLDER containing ffmpeg.exe / ffprobe.exe, e.g. on Windows:
 #   $env:TUBELY_FFMPEG_DIR = "C:\Users\10User\Downloads\ffmpeg-8.0-essentials_build\bin"
