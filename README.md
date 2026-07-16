@@ -1,6 +1,10 @@
 # YouTube Dracula
 
-Download YouTube videos and audio - pick quality, trim to a section, convert to MP3, or pull whole playlists as one file or a zip. Built with Flask + yt-dlp and ffmpeg.
+Downloading content from YouTube is often a frustrating, multi-step process. Users typically need separate tools to download a video, another to convert it to MP3, and a third if they only want a specific clip or an entire playlist. This fragmentation wastes time and creates a confusing experience, especially for non-technical users. YoutubeDracula solves this by consolidating all these tasks into one streamlined tool, eliminating the need to juggle multiple websites or command-line utilities.
+
+YoutubeDracula provides a simple, web-based interface where users can paste a YouTube link and choose their desired action in just a few clicks. First, it can download videos in your chosen quality. Second, it can extract and convert audio to MP3 format. Third, it allows you to trim a video to a specific section, saving only the part you need. Finally, it can process entire playlists, offering the option to download each video individually or combine them into a single file or a convenient ZIP archive.
+
+## Website
 
 <img width="1530" height="1384" alt="interface" src="https://github.com/user-attachments/assets/2835afe9-78db-4e8e-b581-836e18ec5da6" />
 
@@ -34,15 +38,8 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Then open **http://localhost:5000** in your browser.
+Then open **http://localhost:5000** in your browser to run locally, deployment is still under construction [https://youtube-dracula.onrender.com/]
 
 In the terminal, you can monitor the downloading process in real-time
 
 <img width="3070" height="1726" alt="process" src="https://github.com/user-attachments/assets/f2407fea-34ad-46db-a7cf-2d45e12bb9db" />
-
-
-## Website
-
-(Still under construction)
-
-https://youtube-dracula.onrender.com/
