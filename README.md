@@ -2,7 +2,7 @@
 
 Download YouTube videos and audio - pick quality, trim to a section, convert to MP3, or pull whole playlists as one file or a zip. Built with Flask + yt-dlp and ffmpeg.
 
-<img width="676" height="635" alt="UI" src="https://github.com/user-attachments/assets/381c107b-e219-44c2-b453-e5842fb965e1" />
+<img width="1530" height="1384" alt="interface" src="https://github.com/user-attachments/assets/2835afe9-78db-4e8e-b581-836e18ec5da6" />
 
 <img width="679" height="628" alt="vid" src="https://github.com/user-attachments/assets/87c1f8be-e16b-4c16-9e71-99d844d3bb5e" />
 
@@ -36,8 +36,13 @@ python app.py
 
 Then open **http://localhost:5000** in your browser.
 
-Or just use the website.
+In the terminal, you can monitor the downloading process in real-time
+
+<img width="3070" height="1726" alt="process" src="https://github.com/user-attachments/assets/f2407fea-34ad-46db-a7cf-2d45e12bb9db" />
+
 
 ## Website
+
+Or just use the website.
 
 https://youtube-dracula.onrender.com/
