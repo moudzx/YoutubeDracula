@@ -21,6 +21,18 @@ os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 COOKIES_FROM_BROWSER = os.environ.get("YTDLP_COOKIES_FROM_BROWSER", "").strip()
 COOKIES_FILE = os.environ.get("YTDLP_COOKIES_FILE", "").strip()
 
+# Render (and similar platforms) mount "Secret Files" as read-only at /etc/secrets/...
+# yt-dlp needs to be able to WRITE to the cookie jar (it refreshes cookies as it
+# runs), so if our configured cookies file lives on a read-only mount, copy it to
+# a writable location (/tmp) once at startup and use that copy instead.
+if COOKIES_FILE and not os.access(os.path.dirname(COOKIES_FILE) or ".", os.W_OK):
+    _writable_cookies = os.path.join("/tmp", os.path.basename(COOKIES_FILE) or "ytcookies.txt")
+    try:
+        shutil.copyfile(COOKIES_FILE, _writable_cookies)
+        COOKIES_FILE = _writable_cookies
+    except OSError:
+        pass  # fall back to original path; will error clearly later if truly unreadable
+
 # --- ffmpeg location (needed if ffmpeg/ffprobe aren't on your system PATH) ---
 # Set this to the FOLDER containing ffmpeg.exe / ffprobe.exe, e.g. on Windows:
 #   $env:TUBELY_FFMPEG_DIR = "C:\Users\10User\Downloads\ffmpeg-8.0-essentials_build\bin"
